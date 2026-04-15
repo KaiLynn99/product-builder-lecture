@@ -25,6 +25,20 @@
             </div>
             <button id="generate-btn" type="button">Generate Numbers</button>
         </section>
+
+        <section class="comments-panel" aria-labelledby="lotto-comments-title" data-comments-key="lotto-comments">
+            <h2 id="lotto-comments-title">댓글</h2>
+            <form class="comment-form">
+                <label for="lotto-comment-name">이름</label>
+                <input id="lotto-comment-name" name="name" type="text" autocomplete="name" required>
+
+                <label for="lotto-comment-message">댓글</label>
+                <textarea id="lotto-comment-message" name="message" rows="3" required></textarea>
+
+                <button type="submit">댓글 남기기</button>
+            </form>
+            <div class="comment-list" aria-live="polite"></div>
+        </section>
     </main>
     <script src="main.js" defer></script>
 </body>

@@ -23,6 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
             generateNumbers(numberContainer);
         });
     }
+
+    document.querySelectorAll(".comments-panel").forEach(setupComments);
 });
 
 function getSystemTheme() {
@@ -80,4 +82,108 @@ function createNumberElement(number) {
     numberDiv.textContent = number;
 
     return numberDiv;
+}
+
+
+function setupComments(panel) {
+    const form = panel.querySelector(".comment-form");
+    const list = panel.querySelector(".comment-list");
+    const storageKey = panel.dataset.commentsKey;
+
+    if (!form || !list || !storageKey) {
+        return;
+    }
+
+    renderComments(list, getComments(storageKey));
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const name = String(formData.get("name") || "").trim();
+        const message = String(formData.get("message") || "").trim();
+
+        if (!name || !message) {
+            return;
+        }
+
+        const comments = getComments(storageKey);
+        comments.unshift({
+            id: Date.now(),
+            name,
+            message,
+            createdAt: new Date().toISOString(),
+        });
+
+        saveComments(storageKey, comments);
+        renderComments(list, comments);
+        form.reset();
+    });
+}
+
+function getComments(storageKey) {
+    try {
+        const comments = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        return Array.isArray(comments) ? comments : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function saveComments(storageKey, comments) {
+    try {
+        localStorage.setItem(storageKey, JSON.stringify(comments.slice(0, 50)));
+    } catch (error) {
+        // Comments are optional; the page should keep working even if storage is unavailable.
+    }
+}
+
+function renderComments(list, comments) {
+    list.replaceChildren();
+
+    if (comments.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.classList.add("empty-comments");
+        emptyMessage.textContent = "아직 댓글이 없습니다.";
+        list.append(emptyMessage);
+        return;
+    }
+
+    comments.forEach((comment) => {
+        const article = document.createElement("article");
+        article.classList.add("comment-item");
+
+        const header = document.createElement("div");
+        header.classList.add("comment-meta");
+
+        const name = document.createElement("strong");
+        name.textContent = comment.name;
+
+        const time = document.createElement("time");
+        time.dateTime = comment.createdAt;
+        time.textContent = formatCommentDate(comment.createdAt);
+
+        const message = document.createElement("p");
+        message.textContent = comment.message;
+
+        header.append(name, time);
+        article.append(header, message);
+        list.append(article);
+    });
+}
+
+function formatCommentDate(value) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "방금 전";
+    }
+
+    return date.toLocaleString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
 }

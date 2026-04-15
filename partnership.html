@@ -39,6 +39,20 @@
                 <button type="submit">문의 보내기</button>
             </form>
         </section>
+
+        <section class="comments-panel" aria-labelledby="partnership-comments-title" data-comments-key="partnership-comments">
+            <h2 id="partnership-comments-title">댓글</h2>
+            <form class="comment-form">
+                <label for="partnership-comment-name">이름</label>
+                <input id="partnership-comment-name" name="name" type="text" autocomplete="name" required>
+
+                <label for="partnership-comment-message">댓글</label>
+                <textarea id="partnership-comment-message" name="message" rows="3" required></textarea>
+
+                <button type="submit">댓글 남기기</button>
+            </form>
+            <div class="comment-list" aria-live="polite"></div>
+        </section>
     </main>
     <script src="main.js" defer></script>
 </body>

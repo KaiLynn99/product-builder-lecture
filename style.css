@@ -127,14 +127,16 @@ h1 {
 }
 
 .lotto-panel,
-.contact-panel {
+.contact-panel,
+.comments-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .lotto-panel h2,
-.contact-panel h2 {
+.contact-panel h2,
+.comments-panel h2 {
     margin: 0 0 1rem;
     color: var(--heading-text);
     text-align: center;
@@ -182,7 +184,8 @@ h1 {
     box-shadow: 0 0 20px var(--button-glow);
 }
 
-.contact-panel {
+.contact-panel,
+.comments-panel {
     align-items: stretch;
     padding: 1.5rem;
     color: var(--panel-text);
@@ -191,7 +194,8 @@ h1 {
     box-shadow: 0 10px 24px var(--heading-shadow);
 }
 
-.contact-panel h2 {
+.contact-panel h2,
+.comments-panel h2 {
     color: var(--panel-text);
     text-shadow: none;
 }
@@ -201,17 +205,21 @@ h1 {
     text-align: center;
 }
 
-.contact-panel form {
+.contact-panel form,
+.comments-panel form {
     display: grid;
     gap: 0.7rem;
 }
 
-.contact-panel label {
+.contact-panel label,
+.comments-panel label {
     font-weight: bold;
 }
 
 .contact-panel input,
-.contact-panel textarea {
+.contact-panel textarea,
+.comments-panel input,
+.comments-panel textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 0.85rem 1rem;
@@ -222,17 +230,21 @@ h1 {
     font: inherit;
 }
 
-.contact-panel textarea {
+.contact-panel textarea,
+.comments-panel textarea {
     resize: vertical;
 }
 
 .contact-panel input:focus,
-.contact-panel textarea:focus {
+.contact-panel textarea:focus,
+.comments-panel input:focus,
+.comments-panel textarea:focus {
     border-color: var(--field-focus);
     outline: 3px solid color-mix(in srgb, var(--field-focus), transparent 70%);
 }
 
-.contact-panel button {
+.contact-panel button,
+.comments-panel button {
     margin-top: 0.5rem;
     padding: 0.9rem 1.5rem;
     color: var(--button-text);
@@ -244,8 +256,42 @@ h1 {
     font-weight: bold;
 }
 
-.contact-panel button:hover {
+.contact-panel button:hover,
+.comments-panel button:hover {
     box-shadow: 0 0 18px var(--button-glow);
+}
+
+.comment-list {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+}
+
+.comment-item {
+    padding: 1rem;
+    color: var(--panel-text);
+    background-color: color-mix(in srgb, var(--field-bg), transparent 10%);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+}
+
+.comment-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.55rem;
+}
+
+.comment-meta time {
+    font-size: 0.85rem;
+    opacity: 0.75;
+}
+
+.comment-item p,
+.empty-comments {
+    margin: 0;
+    line-height: 1.5;
+    white-space: pre-wrap;
 }
 
 @media (max-width: 520px) {
@@ -267,7 +313,13 @@ h1 {
         font-size: 1.2rem;
     }
 
-    .contact-panel {
+    .contact-panel,
+    .comments-panel {
         padding: 1rem;
+    }
+
+    .comment-meta {
+        flex-direction: column;
+        gap: 0.25rem;
     }
 }
