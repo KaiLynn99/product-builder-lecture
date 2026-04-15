@@ -95,6 +95,7 @@ function setupComments(panel) {
         return;
     }
 
+    setupCommentComposer(form, messageField);
     setupEmojiPicker(panel, messageField);
     renderComments(list, getComments(storageKey));
 
@@ -120,6 +121,7 @@ function setupComments(panel) {
         saveComments(storageKey, comments);
         renderComments(list, comments);
         form.reset();
+        collapseCommentForm(form);
     });
 }
 
@@ -140,6 +142,36 @@ function saveComments(storageKey, comments) {
     }
 }
 
+function setupCommentComposer(form, messageField) {
+    collapseCommentForm(form);
+
+    form.addEventListener("focusin", () => {
+        expandCommentForm(form);
+    });
+
+    form.addEventListener("click", () => {
+        expandCommentForm(form);
+    });
+
+    if (messageField) {
+        messageField.addEventListener("input", () => {
+            if (messageField.value.trim()) {
+                expandCommentForm(form);
+            }
+        });
+    }
+}
+
+function expandCommentForm(form) {
+    form.classList.remove("comment-form--collapsed");
+    form.classList.add("comment-form--expanded");
+}
+
+function collapseCommentForm(form) {
+    form.classList.add("comment-form--collapsed");
+    form.classList.remove("comment-form--expanded");
+}
+
 function setupEmojiPicker(panel, messageField) {
     if (!messageField) {
         return;
@@ -147,6 +179,7 @@ function setupEmojiPicker(panel, messageField) {
 
     panel.querySelectorAll("[data-emoji]").forEach((button) => {
         button.addEventListener("click", () => {
+            expandCommentForm(panel.querySelector(".comment-form"));
             insertEmoji(messageField, button.dataset.emoji || "");
         });
     });
