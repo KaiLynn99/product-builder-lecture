@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>동물상 테스트</title>
+    <meta name="description" content="Teachable Machine 이미지 모델로 업로드한 사진의 강아지상과 고양이상 확률을 브라우저에서 분석하는 테스트입니다.">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1248878012677712"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
@@ -13,7 +14,10 @@
         <nav class="site-nav" aria-label="Primary navigation">
             <a href="index.html">Lotto</a>
             <a href="animal.html" aria-current="page">동물상 테스트</a>
+            <a href="animal-guide.html">이용 가이드</a>
             <a href="partnership.html">제휴 문의</a>
+            <a href="about.html">소개</a>
+            <a href="privacy.html">개인정보</a>
         </nav>
         <h1>동물상 테스트</h1>
         <button id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
@@ -42,6 +46,26 @@
                 <div id="animal-scores" class="animal-scores"></div>
             </div>
         </section>
+
+        <section class="content-panel" aria-labelledby="animal-explain-title">
+            <h2 id="animal-explain-title">테스트가 작동하는 방식</h2>
+            <p>이 페이지는 사용자가 선택한 이미지를 브라우저에서 읽고, Teachable Machine 이미지 분류 모델을 이용해 두 라벨의 확률을 계산합니다. 현재 모델의 라벨은 강아지와 고양이이며, 결과는 가장 높은 확률을 기준으로 표시됩니다.</p>
+            <ul class="info-list">
+                <li>사진은 분석을 위해 사이트 서버로 업로드하지 않습니다.</li>
+                <li>얼굴이 중앙에 있고 밝은 사진일수록 결과가 안정적입니다.</li>
+                <li>모델은 재미용 분류 도구이며 사람의 성격, 매력, 외모를 단정하지 않습니다.</li>
+            </ul>
+        </section>
+
+        <section class="content-panel" aria-labelledby="animal-tips-title">
+            <h2 id="animal-tips-title">더 좋은 결과를 위한 사진 팁</h2>
+            <p>모델은 이미지 안의 패턴을 기준으로 판단합니다. 흐릿한 사진, 여러 명이 함께 나온 사진, 얼굴 일부가 가려진 사진은 결과가 흔들릴 수 있습니다.</p>
+            <ol class="info-list">
+                <li>정면에 가까운 사진을 선택합니다.</li>
+                <li>얼굴 주변이 너무 어둡거나 과하게 밝지 않은 이미지를 사용합니다.</li>
+                <li>선글라스, 마스크, 강한 필터가 적용된 사진은 피합니다.</li>
+            </ol>
+        </section>
         <section class="comments-panel" aria-labelledby="animal-comments-title" data-comments-key="animal-comments">
             <h2 id="animal-comments-title">댓글</h2>
             <form class="comment-form comment-form--collapsed">
@@ -69,6 +93,16 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js" defer></script>
+
+    <footer class="site-footer">
+        <nav aria-label="Footer navigation">
+            <a href="animal-guide.html">동물상 테스트 이용 가이드</a>
+            <a href="about.html">사이트 소개</a>
+            <a href="privacy.html">개인정보 처리방침</a>
+            <a href="partnership.html">제휴 문의</a>
+        </nav>
+        <p>사진 분석 결과는 재미와 참고용이며, 실제 성격이나 외모를 단정하지 않습니다.</p>
+    </footer>
     <script src="main.js" defer></script>
 </body>
 </html>
