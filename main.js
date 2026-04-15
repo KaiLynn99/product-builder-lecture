@@ -88,12 +88,14 @@ function createNumberElement(number) {
 function setupComments(panel) {
     const form = panel.querySelector(".comment-form");
     const list = panel.querySelector(".comment-list");
+    const messageField = form ? form.elements.message : null;
     const storageKey = panel.dataset.commentsKey;
 
     if (!form || !list || !storageKey) {
         return;
     }
 
+    setupEmojiPicker(panel, messageField);
     renderComments(list, getComments(storageKey));
 
     form.addEventListener("submit", (event) => {
@@ -138,6 +140,36 @@ function saveComments(storageKey, comments) {
     }
 }
 
+function setupEmojiPicker(panel, messageField) {
+    if (!messageField) {
+        return;
+    }
+
+    panel.querySelectorAll("[data-emoji]").forEach((button) => {
+        button.addEventListener("click", () => {
+            insertEmoji(messageField, button.dataset.emoji || "");
+        });
+    });
+}
+
+function insertEmoji(field, emoji) {
+    if (!emoji) {
+        return;
+    }
+
+    const start = field.selectionStart ?? field.value.length;
+    const end = field.selectionEnd ?? field.value.length;
+    const prefix = field.value.slice(0, start);
+    const suffix = field.value.slice(end);
+    const needsSpace = prefix.length > 0 && !/\s$/.test(prefix);
+    const inserted = `${needsSpace ? " " : ""}${emoji} `;
+
+    field.value = `${prefix}${inserted}${suffix}`;
+    field.focus();
+    field.selectionStart = start + inserted.length;
+    field.selectionEnd = start + inserted.length;
+}
+
 function renderComments(list, comments) {
     list.replaceChildren();
 
@@ -156,18 +188,35 @@ function renderComments(list, comments) {
         const header = document.createElement("div");
         header.classList.add("comment-meta");
 
+        const nameRow = document.createElement("div");
+        nameRow.classList.add("comment-name-row");
+
+        const nameLabel = document.createElement("span");
+        nameLabel.classList.add("comment-label");
+        nameLabel.textContent = "이름";
+
         const name = document.createElement("strong");
+        name.classList.add("comment-author");
         name.textContent = comment.name;
 
         const time = document.createElement("time");
         time.dateTime = comment.createdAt;
         time.textContent = formatCommentDate(comment.createdAt);
 
+        const body = document.createElement("div");
+        body.classList.add("comment-body");
+
+        const messageLabel = document.createElement("span");
+        messageLabel.classList.add("comment-label");
+        messageLabel.textContent = "내용";
+
         const message = document.createElement("p");
         message.textContent = comment.message;
 
-        header.append(name, time);
-        article.append(header, message);
+        nameRow.append(nameLabel, name);
+        header.append(nameRow, time);
+        body.append(messageLabel, message);
+        article.append(header, body);
         list.append(article);
     });
 }

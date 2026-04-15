@@ -46,8 +46,19 @@
                 <label for="partnership-comment-name">이름</label>
                 <input id="partnership-comment-name" name="name" type="text" autocomplete="name" required>
 
-                <label for="partnership-comment-message">댓글</label>
+                <label for="partnership-comment-message">내용</label>
                 <textarea id="partnership-comment-message" name="message" rows="3" required></textarea>
+
+                <div class="emoji-picker" aria-label="댓글 이모티콘">
+                    <button type="button" data-emoji="😀" aria-label="웃는 얼굴 추가">😀</button>
+                    <button type="button" data-emoji="🎉" aria-label="축하 이모티콘 추가">🎉</button>
+                    <button type="button" data-emoji="👍" aria-label="좋아요 이모티콘 추가">👍</button>
+                    <button type="button" data-emoji="🍀" aria-label="행운 이모티콘 추가">🍀</button>
+                    <button type="button" data-emoji="🔥" aria-label="불꽃 이모티콘 추가">🔥</button>
+                    <button type="button" data-emoji="✨" aria-label="반짝임 이모티콘 추가">✨</button>
+                    <button type="button" data-emoji="💡" aria-label="아이디어 이모티콘 추가">💡</button>
+                    <button type="button" data-emoji="🙏" aria-label="감사 이모티콘 추가">🙏</button>
+                </div>
 
                 <button type="submit">댓글 남기기</button>
             </form>
