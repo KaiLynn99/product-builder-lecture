@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    setupAnimalTest();
     document.querySelectorAll(".comments-panel").forEach(setupComments);
 });
 
@@ -82,6 +83,115 @@ function createNumberElement(number) {
     numberDiv.textContent = number;
 
     return numberDiv;
+}
+
+
+const ANIMAL_MODEL_URL = "https://teachablemachine.withgoogle.com/models/QeZpArAKA/";
+
+async function setupAnimalTest() {
+    const fileInput = document.getElementById("animal-image");
+    const previewImage = document.getElementById("animal-preview-image");
+    const status = document.getElementById("animal-status");
+    const result = document.getElementById("animal-result");
+    const resultTitle = document.getElementById("animal-result-title");
+    const resultCopy = document.getElementById("animal-result-copy");
+    const scores = document.getElementById("animal-scores");
+
+    if (!fileInput || !previewImage || !status || !result || !resultTitle || !resultCopy || !scores) {
+        return;
+    }
+
+    let modelPromise = null;
+
+    fileInput.addEventListener("change", () => {
+        const file = fileInput.files && fileInput.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        if (!file.type.startsWith("image/")) {
+            status.textContent = "이미지 파일을 선택해주세요.";
+            return;
+        }
+
+        const imageUrl = URL.createObjectURL(file);
+        previewImage.hidden = false;
+        previewImage.onload = async () => {
+            URL.revokeObjectURL(imageUrl);
+            status.textContent = "분석 중입니다...";
+            result.hidden = true;
+
+            try {
+                if (!modelPromise) {
+                    modelPromise = loadAnimalModel();
+                }
+
+                const model = await modelPromise;
+                const predictions = await model.predict(previewImage);
+                renderAnimalResult(predictions, status, result, resultTitle, resultCopy, scores);
+            } catch (error) {
+                status.textContent = "모델을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.";
+            }
+        };
+        previewImage.src = imageUrl;
+    });
+}
+
+async function loadAnimalModel() {
+    if (!window.tmImage) {
+        throw new Error("Teachable Machine image library is not loaded.");
+    }
+
+    return window.tmImage.load(`${ANIMAL_MODEL_URL}model.json`, `${ANIMAL_MODEL_URL}metadata.json`);
+}
+
+function renderAnimalResult(predictions, status, result, resultTitle, resultCopy, scores) {
+    const sorted = [...predictions].sort((a, b) => b.probability - a.probability);
+    const winner = sorted[0];
+    const winnerPercent = Math.round(winner.probability * 100);
+
+    status.textContent = "분석이 완료됐습니다.";
+    result.hidden = false;
+    resultTitle.textContent = `${winner.className}상 ${winnerPercent}%`;
+    resultCopy.textContent = getAnimalResultCopy(winner.className, winnerPercent);
+    scores.replaceChildren(...sorted.map(createAnimalScore));
+}
+
+function getAnimalResultCopy(label, percent) {
+    if (label.includes("강아지")) {
+        return percent >= 70 ? "밝고 다정한 강아지상에 가깝습니다." : "강아지상 느낌이 조금 더 강합니다.";
+    }
+
+    if (label.includes("고양이")) {
+        return percent >= 70 ? "차분하고 매력적인 고양이상에 가깝습니다." : "고양이상 느낌이 조금 더 강합니다.";
+    }
+
+    return "가장 높은 확률의 결과입니다.";
+}
+
+function createAnimalScore(prediction) {
+    const percent = Math.round(prediction.probability * 100);
+    const row = document.createElement("div");
+    row.classList.add("animal-score");
+
+    const label = document.createElement("span");
+    label.textContent = prediction.className;
+
+    const value = document.createElement("strong");
+    value.textContent = `${percent}%`;
+
+    const track = document.createElement("div");
+    track.classList.add("score-track");
+
+    const bar = document.createElement("div");
+    bar.classList.add("score-bar");
+    bar.style.width = `${percent}%`;
+
+    track.append(bar);
+    row.append(label, value, track);
+
+    return row;
 }
 
 

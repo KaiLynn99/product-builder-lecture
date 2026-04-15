@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>동물상 테스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a href="index.html">Lotto</a>
+            <a href="animal.html" aria-current="page">동물상 테스트</a>
+            <a href="partnership.html">제휴 문의</a>
+        </nav>
+        <h1>동물상 테스트</h1>
+        <button id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+            Dark Mode
+        </button>
+    </header>
+    <main>
+        <section class="animal-panel" aria-labelledby="animal-title">
+            <h2 id="animal-title">나는 강아지상일까 고양이상일까?</h2>
+            <p>정면 사진을 올리면 모델이 강아지상과 고양이상 확률을 계산합니다.</p>
+
+            <label class="upload-box" for="animal-image">
+                <span>사진 선택</span>
+                <small>JPG, PNG 이미지를 사용할 수 있습니다.</small>
+            </label>
+            <input id="animal-image" class="visually-hidden" type="file" accept="image/*">
+
+            <div class="animal-preview" aria-live="polite">
+                <img id="animal-preview-image" alt="업로드한 사진 미리보기" hidden>
+                <p id="animal-status">사진을 선택하면 분석을 시작합니다.</p>
+            </div>
+
+            <div id="animal-result" class="animal-result" hidden>
+                <strong id="animal-result-title"></strong>
+                <p id="animal-result-copy"></p>
+                <div id="animal-scores" class="animal-scores"></div>
+            </div>
+        </section>
+        <section class="comments-panel" aria-labelledby="animal-comments-title" data-comments-key="animal-comments">
+            <h2 id="animal-comments-title">댓글</h2>
+            <form class="comment-form comment-form--collapsed">
+                <label for="animal-comment-name">이름</label>
+                <input id="animal-comment-name" name="name" type="text" autocomplete="name" required>
+
+                <label for="animal-comment-message">내용</label>
+                <textarea id="animal-comment-message" name="message" rows="1" placeholder="댓글 추가..." required></textarea>
+
+                <div class="emoji-picker" aria-label="댓글 이모티콘">
+                    <button type="button" data-emoji="😀" aria-label="웃는 얼굴 추가">😀</button>
+                    <button type="button" data-emoji="🎉" aria-label="축하 이모티콘 추가">🎉</button>
+                    <button type="button" data-emoji="👍" aria-label="좋아요 이모티콘 추가">👍</button>
+                    <button type="button" data-emoji="🍀" aria-label="행운 이모티콘 추가">🍀</button>
+                    <button type="button" data-emoji="🔥" aria-label="불꽃 이모티콘 추가">🔥</button>
+                    <button type="button" data-emoji="✨" aria-label="반짝임 이모티콘 추가">✨</button>
+                    <button type="button" data-emoji="💡" aria-label="아이디어 이모티콘 추가">💡</button>
+                    <button type="button" data-emoji="🙏" aria-label="감사 이모티콘 추가">🙏</button>
+                </div>
+
+                <button type="submit">댓글 남기기</button>
+            </form>
+            <div class="comment-list" aria-live="polite"></div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.7.4/dist/tf.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js" defer></script>
+    <script src="main.js" defer></script>
+</body>
+</html>
