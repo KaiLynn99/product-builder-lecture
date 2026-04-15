@@ -487,12 +487,7 @@ h1 {
     opacity: 0.75;
 }
 
-.comment-
-[hidden] {
-    display: none !important;
-}
-
-body {
+.comment-body {
     display: grid;
     gap: 0.3rem;
 }
