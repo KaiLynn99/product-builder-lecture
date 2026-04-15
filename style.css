@@ -508,6 +508,64 @@ h1 {
 }
 
 
+
+.home-panel {
+    display: grid;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    color: var(--panel-text);
+    background-color: var(--panel-bg);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px var(--heading-shadow);
+}
+
+.home-panel h2 {
+    margin: 0;
+    color: var(--panel-text);
+    text-align: center;
+}
+
+.home-panel p {
+    margin: 0;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.tool-card {
+    display: grid;
+    gap: 0.55rem;
+    padding: 1rem;
+    color: #111827;
+    background-color: var(--field-bg);
+    border: 1px solid var(--field-border);
+    border-left: 5px solid var(--comment-accent);
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.tool-card:hover,
+.tool-card:focus-visible {
+    border-color: var(--field-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--field-focus), transparent 74%);
+}
+
+.tool-card strong {
+    font-size: 1.2rem;
+}
+
+.tool-kicker {
+    color: var(--label-text);
+    font-size: 0.78rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .content-panel,
 .article-panel {
     align-items: stretch;
@@ -610,6 +668,7 @@ h1 {
     }
 
     .contact-panel,
+    .home-panel,
     .content-panel,
     .article-panel {
         padding: 1rem;
