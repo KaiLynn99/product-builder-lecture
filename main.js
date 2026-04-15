@@ -1,27 +1,28 @@
 const STORAGE_KEY = "theme";
 
 document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("theme-toggle");
     const numberContainer = document.querySelector(".number-container");
     const generateBtn = document.getElementById("generate-btn");
-    const themeToggle = document.getElementById("theme-toggle");
 
-    if (!numberContainer || !generateBtn || !themeToggle) {
-        return;
+    if (themeToggle) {
+        const initialTheme = getSavedTheme() || getSystemTheme();
+        setTheme(themeToggle, initialTheme);
+
+        themeToggle.addEventListener("click", () => {
+            const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+            setTheme(themeToggle, nextTheme);
+            saveTheme(nextTheme);
+        });
     }
 
-    const initialTheme = getSavedTheme() || getSystemTheme();
-    setTheme(themeToggle, initialTheme);
-    generateNumbers(numberContainer);
-
-    generateBtn.addEventListener("click", () => {
+    if (numberContainer && generateBtn) {
         generateNumbers(numberContainer);
-    });
 
-    themeToggle.addEventListener("click", () => {
-        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        setTheme(themeToggle, nextTheme);
-        saveTheme(nextTheme);
-    });
+        generateBtn.addEventListener("click", () => {
+            generateNumbers(numberContainer);
+        });
+    }
 });
 
 function getSystemTheme() {

@@ -83,6 +83,28 @@ header {
     text-align: center;
 }
 
+.site-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.site-nav a {
+    padding: 0.55rem 0.9rem;
+    color: var(--toggle-text);
+    background-color: var(--toggle-bg);
+    border: 1px solid var(--toggle-border);
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.site-nav a[aria-current="page"] {
+    color: var(--button-text);
+    background-color: var(--button-bg);
+}
+
 h1 {
     font-size: 3rem;
     color: var(--heading-text);
@@ -229,6 +251,10 @@ h1 {
 @media (max-width: 520px) {
     h1 {
         font-size: 2.1rem;
+    }
+
+    .site-nav {
+        flex-wrap: wrap;
     }
 
     .number-container {

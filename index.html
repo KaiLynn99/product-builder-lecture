@@ -8,6 +8,10 @@
 </head>
 <body>
     <header>
+        <nav class="site-nav" aria-label="Primary navigation">
+            <a href="index.html" aria-current="page">Lotto</a>
+            <a href="partnership.html">제휴 문의</a>
+        </nav>
         <h1>Lotto Number Generator</h1>
         <button id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
             Dark Mode
@@ -20,28 +24,6 @@
                 <!-- Numbers will be generated here -->
             </div>
             <button id="generate-btn" type="button">Generate Numbers</button>
-        </section>
-
-        <section class="contact-panel" aria-labelledby="partnership-title">
-            <h2 id="partnership-title">제휴 문의</h2>
-            <p>함께 진행하고 싶은 제안이 있다면 아래로 보내주세요.</p>
-            <form action="https://formspree.io/f/mbdqdlqe" method="POST">
-                <input type="hidden" name="_subject" value="새 제휴 문의가 도착했습니다">
-
-                <label for="name">이름</label>
-                <input id="name" name="name" type="text" autocomplete="name" required>
-
-                <label for="email">이메일</label>
-                <input id="email" name="email" type="email" autocomplete="email" required>
-
-                <label for="company">회사/브랜드</label>
-                <input id="company" name="company" type="text" autocomplete="organization">
-
-                <label for="message">문의 내용</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit">문의 보내기</button>
-            </form>
         </section>
     </main>
     <script src="main.js" defer></script>
